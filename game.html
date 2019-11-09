@@ -11,6 +11,8 @@
     let ballSpeedY = 4;
 
     let paddle1Y = 250;
+    let paddle2Y = 250;
+    const PADDLE_THICKNESS = 10;
     const PADDLE_HEIGHT = 100;
 
     function calculateMousePos(evt) {
@@ -37,7 +39,7 @@
 
       canvas.addEventListener("mousemove", function(evt) {
         let mousePos = calculateMousePos(evt);
-        paddle1Y = mousePos.y - PADDLE_HEIGHT / 2;
+        paddle2Y = mousePos.y - PADDLE_HEIGHT / 2;
       });
     };
 
@@ -59,7 +61,12 @@
         }
       }
       if (ballX > canvas.width) {
-        ballSpeedX = -ballSpeedX;
+        //ballSpeedX = -ballSpeedX;
+        if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT) {
+          ballSpeedX = -ballSpeedX;
+        } else {
+          ballReset();
+        }
       }
       if (ballY < 0) {
         ballSpeedY = -ballSpeedY;
@@ -74,7 +81,16 @@
       colorRect(0, 0, canvas.width, canvas.height, "black");
 
       // left player paddle
-      colorRect(0, paddle1Y, 10, PADDLE_HEIGHT, "white");
+      colorRect(10, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, "white");
+
+      // right player paddle
+      colorRect(
+        canvas.width - PADDLE_THICKNESS,
+        paddle2Y,
+        PADDLE_THICKNESS,
+        PADDLE_HEIGHT,
+        "white"
+      );
 
       // draws the ball
       //colorRect(ballX, 100, 10, 10, "green");
