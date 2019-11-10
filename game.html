@@ -42,6 +42,7 @@
     window.onload = function() {
       canvas = document.getElementById("gameCanvas");
       canvasContext = canvas.getContext("2d");
+      canvasContext.font = "30px Georgia";
 
       let framesPerSecond = 30;
 
@@ -114,6 +115,12 @@
       }
     }
 
+    function drawNet() {
+      for (var i = 0; i < canvas.height; i += 40) {
+        colorRect(canvas.width / 2 - 1, i, 2, 20, "white");
+      }
+    }
+
     function drawEverything() {
       // next line blanks out the screen with black
       colorRect(0, 0, canvas.width, canvas.height, "black");
@@ -130,12 +137,13 @@
         return;
       }
 
+      drawNet();
       // left player paddle
       colorRect(10, paddle1Y, PADDLE_THICKNESS, PADDLE_HEIGHT, "white");
 
       // right player paddle
       colorRect(
-        canvas.width - PADDLE_THICKNESS,
+        canvas.width - 20,
         paddle2Y,
         PADDLE_THICKNESS,
         PADDLE_HEIGHT,
@@ -144,9 +152,10 @@
 
       // draws the ball
       //colorRect(ballX, 100, 10, 10, "green");
-      colorCircle(ballX, ballY, 10, "green");
-
+      colorCircle(ballX, ballY, 10, "white");
+      canvasContext.fillText("Player One", 100, 80);
       canvasContext.fillText(player1Score, 100, 100);
+      canvasContext.fillText("Player Two", canvas.width - 230, 80);
       canvasContext.fillText(player2Score, canvas.width - 100, 100);
     }
 
